@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const COUNTRY_CODES = ['+1', '+44', '+61', '+91', '+81', '+49', '+33', '+971', '+65', '+82']
 
-function ConsultationForm() {
+function ConsultationForm({ compact = false }) {
   const [form, setForm] = useState({
     first_name: '',
     last_name: '',
@@ -39,7 +39,7 @@ function ConsultationForm() {
         throw new Error(err.detail || 'Failed to submit. Please try again.')
       }
 
-      setStatus({ type: 'success', message: 'Thanks! We\'ll be in touch shortly.' })
+      setStatus({ type: 'success', message: "Thanks! We'll be in touch shortly." })
       setForm({ first_name: '', last_name: '', company: '', email: '', country_code: COUNTRY_CODES[0], phone_number: '', message: '' })
     } catch (error) {
       setStatus({ type: 'error', message: error.message || 'Something went wrong.' })
@@ -49,38 +49,38 @@ function ConsultationForm() {
   }
 
   return (
-    <section className="py-12 md:py-16">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="rounded-2xl border border-slate-700/60 bg-slate-800/60 p-6 md:p-8">
-          <h2 className="text-white text-2xl font-semibold">Get a free consultation</h2>
-          <p className="text-blue-200/80 mt-2">Tell us about your AI or analytics needs. We\'ll respond within one business day.</p>
+    <section className={compact ? '' : 'py-12 md:py-16'}>
+      <div className={compact ? '' : 'max-w-6xl mx-auto px-6'}>
+        <div className={compact ? '' : 'rounded-2xl border border-slate-700/60 bg-slate-800/60 p-6 md:p-8'}>
+          {!compact && <><h2 className="text-white text-2xl font-semibold">Get a free consultation</h2>
+          <p className="text-blue-200/80 mt-2">Tell us about your AI or analytics needs. We\'ll respond within one business day.</p></>}
 
           {status.message && (
-            <div className={`mt-4 rounded border px-4 py-3 text-sm ${status.type === 'success' ? 'border-green-500/40 bg-green-500/10 text-green-300' : 'border-red-500/40 bg-red-500/10 text-red-300'}`}>
+            <div className={`mt-3 rounded border px-3 py-2 text-sm ${status.type === 'success' ? 'border-green-500/40 bg-green-500/10 text-green-300' : 'border-red-500/40 bg-red-500/10 text-red-300'}`}>
               {status.message}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="block text-blue-200/80 text-sm mb-1">First name</label>
+              <label className="block text-blue-200/80 text-xs mb-1">First name</label>
               <input required name="first_name" value={form.first_name} onChange={handleChange} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Jane" />
             </div>
             <div>
-              <label className="block text-blue-200/80 text-sm mb-1">Last name</label>
+              <label className="block text-blue-200/80 text-xs mb-1">Last name</label>
               <input required name="last_name" value={form.last_name} onChange={handleChange} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Doe" />
             </div>
             <div>
-              <label className="block text-blue-200/80 text-sm mb-1">Company (optional)</label>
+              <label className="block text-blue-200/80 text-xs mb-1">Company (optional)</label>
               <input name="company" value={form.company} onChange={handleChange} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Acme AI" />
             </div>
             <div>
-              <label className="block text-blue-200/80 text-sm mb-1">Email</label>
+              <label className="block text-blue-200/80 text-xs mb-1">Email</label>
               <input required type="email" name="email" value={form.email} onChange={handleChange} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="you@example.com" />
             </div>
             <div className="md:col-span-2 grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-blue-200/80 text-sm mb-1">Code</label>
+                <label className="block text-blue-200/80 text-xs mb-1">Code</label>
                 <select name="country_code" value={form.country_code} onChange={handleChange} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50">
                   {COUNTRY_CODES.map(code => (
                     <option key={code} value={code}>{code}</option>
@@ -88,13 +88,13 @@ function ConsultationForm() {
                 </select>
               </div>
               <div className="col-span-2">
-                <label className="block text-blue-200/80 text-sm mb-1">Phone number</label>
+                <label className="block text-blue-200/80 text-xs mb-1">Phone number</label>
                 <input required name="phone_number" value={form.phone_number} onChange={handleChange} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="123 456 789" />
               </div>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-blue-200/80 text-sm mb-1">Message (optional)</label>
-              <textarea name="message" value={form.message} onChange={handleChange} rows={4} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Briefly describe your goals or challenges" />
+              <label className="block text-blue-200/80 text-xs mb-1">Message (optional)</label>
+              <textarea name="message" value={form.message} onChange={handleChange} rows={compact ? 2 : 4} className="w-full rounded-lg bg-slate-900/60 border border-slate-700/60 px-3 py-2 text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Briefly describe your goals or challenges" />
             </div>
             <div className="md:col-span-2 flex justify-end">
               <button type="submit" disabled={loading} className="inline-flex items-center justify-center rounded-lg bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-white font-semibold px-4 py-2 transition-colors">
